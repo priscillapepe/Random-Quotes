@@ -1,0 +1,124 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%block styles%}
+    {{ super() }}
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Ranga" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+{%endblock%}
+<!-- Content block -->
+{%block content%}
+<!-- <div class="container" style="font-family: 'Indie Flower', cursive;">
+    <div class="row">
+        <h3>{{pitch.pitch_title}}</h3>
+        <hr>
+        <p>{{pitch.pitch_content}}</p>
+        <span>
+        <p>Posted on {{date}} by {{pitch.user.username| capitalize}}</p>
+        <a href="/pitch/{{pitch.id}}?like=1">
+            <i class="far fa-thumbs-up"></i>
+        </a>{{pitch.likes}} <a href="/pitch/{{pitch.id}}?dislike=1">
+            <i class="far fa-thumbs-down"></i>
+        </a>{{pitch.dislikes}}</span>
+
+    </div>
+    <div class="row">
+        <h4>Comments</h4>
+        <hr>
+        {% if current_user.is_authenticated %}
+            {{ wtf.quick_form(comment_form) }}
+        {%endif%}
+        {{macro.displayComments(comments)}}
+    </div>
+
+</div> -->
+
+<div class="container ">
+    <h1 class="text-center"> A Quote by {{quote.user.username}}</h1>
+    <div class="row">
+        
+        <div class="col-md-12 singleblog">
+            <hr>
+            <div class="row">
+                <div class="col-md-1">
+                    <img class="rounded-circle blog-img" src="{{ url_for('static', filename='photos/' + quote.user.profile_pic_path) }}">
+                </div>
+                <div class="col-md-8">
+                    {% for message in get_flashed_messages() %}
+                    <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                    </div>
+                    {% endfor %}
+                    <p>By <span style="color: blue">{{quote.user.username}}</span>  on {{quote.posted.strftime('%d-%m-%Y')}}</p>
+                    <h3>Title : {quote.title}} <span style="float: right;font-size:18px;margin-right:20px">{{quote.comment.count()}} Comments</span></h3>
+                    <p>{{quote.content}}</p>
+                    <div>
+                    <a class="btn btn-success btn-sm m-1" data-toggle="modal" data-target="#modalComment">Comment</a>
+                    {% if quote.user == current_user %}
+                        <a class="btn btn-info btn-sm m-1" href="{{url_for('main.updatequote',quote_id = quote.id)}}">Edit Quote</a>
+                        <button class="btn btn-sm btn-danger m-1" data-toggle="modal" data-target="#modalConfirmDelete" type="submit">Delete </button>
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <h4>All Comments</h4>
+                    {% for comment in comments %}
+                        <p class="mt-10"><span style="font-weight: bold">{{comment.user.username}} : </span> {{comment.comment}}</p>
+                    {% endfor %}
+                </div>
+            </div>  
+            <hr>      
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+        <div class="modal-content text-center">
+          <div class="modal-header d-flex justify-content-center">
+            <p class="heading">Are you sure?</p>
+          </div>
+          <div class="modal-body">
+            <i class="fas fa-times fa-4x animated rotateIn"></i>
+          </div>
+          <div class="modal-footer flex-center">
+            <form action="{{url_for('main.delete_post',quote_id = quote.id)}}" method="POST">
+                <input  type="submit" class="btn  btn-outline-danger btn-sm" value="Yes">
+            </form>
+            <a type="button" class="btn btn-sm btn-danger waves-effect" data-dismiss="modal">No</a>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-notify modal-info" role="document">
+  <div class="modal-content text-center">
+    <div class="modal-header d-flex justify-content-center">
+      <p class="heading">Leave A comment Here</p>
+    </div>
+    <div class="modal-body">
+        <form class="form" action="{{url_for('main.comment',blog_id = blog.id)}}" method="POST">
+            <div class="form-group green-border-focus">
+                <label></label>
+                <textarea class="form-control" placeholder="Type your comment..." rows="2" name ="newcomment" required></textarea>
+            </div>
+            <div class="modal-footer flex-center">
+                <button class="btn btn-sm btn-outline-success">Comment</button>
+                <a type="button" class="btn btn-outline-danger btn-sm " data-dismiss="modal">Exit</a>
+            </div>
+        </form>
+    </div>
+   
+
+  </div>
+</div>
+</div>
+
+{% endblock %}
+{%endblock%}

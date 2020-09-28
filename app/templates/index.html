@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+<!-- Styles block -->
+
+{%block styles%}
+    {{ super() }}
+    <link href="https://fonts.googleapis.com/css?family=Ranga" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cormorant+Upright" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+{%endblock%}
+<!-- Content block -->
+{%block content%}
+
+<div class="container landing" style="height: 100px;" >
+    <div class="row " >
+            {% if current_user.is_authenticated %}
+            <div class="col-md-3 "><a class="btn btn-sm btn-info " id="ref" href="{{url_for('main.new_quote')}}">Post</a></div>
+            {% endif %}
+            <div class="col-md-9 "><h1 >{{ title}}</h1></div>
+            <h1>{{ quotes.author}}</h1>
+            <h2>{{ quotes.quote}}</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 ">
+                
+    
+</div>
+{%endblock%}

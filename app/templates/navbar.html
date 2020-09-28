@@ -1,0 +1,68 @@
+<!-- <div class="navbar navbar-expand-md navbar-dark " role="navigation" >
+    <div class="container-fluid ">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+        </div>
+        <div class="navbar-collapse collapse ">
+
+                <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.is_authenticated %}
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{current_user.username| capitalize}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
+                            <li><a href="{{url_for('main.user_quote',uname=current_user.username)}}">quote Blog</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
+                </ul>
+                {%endif%}
+            </div>
+    </div> -->
+<!-- </div> -->
+
+
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark navbarbg">
+    <a class="navbar-brand" href="{{url_for('main.index')}}"><strong>Random Quotes</strong> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('main.index')}}">All posts</a>
+                </li>
+
+            </ul>
+        <ul class="navbar-nav ml-auto">
+            {% if current_user.is_authenticated %}
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" style= 'margin-right:30px' data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-user"></i>&nbsp;<strong>{{current_user.username}}</strong> </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+              <a class="dropdown-item" href="{{url_for('main.profile',name=current_user.username)}}"><i class="far fa-user"></i>&nbsp; My account</a>
+              <a class="dropdown-item" href="{{url_for('auth.logout')}}"><i class="fas fa-sign-out-alt"></i>&nbsp; Log out</a>
+            </div>
+            </li>
+            {% else %}
+              <li class="nav-item">
+                  <a  class="nav-link mr-1" href="{{url_for('auth.login')}}"><i class="fas fa-user-plus"></i></i>&nbsp; <strong>Sign Up</strong></a>
+              </li>
+              <!-- <li class="nav-item">
+                  <a  class="nav-link mr-5" href="{{url_for('auth.login')}}" ><i class="fas fa-sign-in-alt "></i>&nbsp; <strong>Log In</strong></a>
+              </li> -->
+            {%endif%}
+
+        </ul>
+    </div>
+</nav>

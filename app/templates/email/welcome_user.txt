@@ -1,0 +1,9 @@
+Hello {{user.username}}
+
+Welcome to Random quote Blog.
+
+You can start by reading through the previous quote,
+You can share yours,comment,edit and like.
+
+
+Regards

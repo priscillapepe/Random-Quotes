@@ -6,7 +6,6 @@ class QuoteForm(FlaskForm):
 
     title = StringField('Quote title',validators=[Required()])
     text = TextAreaField('Text',validators=[Required()])
-    category = SelectField('Type',choices=[('interview','Interview pitch'),('product','Product pitch'),('promotion','Promotion pitch')],validators=[Required()])
     submit = SubmitField('Submit')
 
 class UpdateProfile(FlaskForm):

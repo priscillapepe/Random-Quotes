@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+{%import 'macros.html' as macro%}
+
+{% block content %}
+<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+              <h3> quote Blog </h3>
+              <hr>
+               {{macro.displayquote(quotes)}}
+            </div>
+        </div>
+       
+    
+</div>
+{% endblock %}

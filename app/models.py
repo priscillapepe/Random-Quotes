@@ -22,7 +22,7 @@ class User(UserMixin,db.Model):
     pass_secure = db.Column(db.String(255))
     date_joined = db.Column(db.DateTime,default=datetime.utcnow)
 
-    quote = db.relationship('quote',backref = 'user',lazy = "dynamic")
+    quote = db.relationship('Quote',backref = 'user',lazy = "dynamic")
 
     comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")
 
@@ -40,32 +40,27 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
-class quote(db.Model):
+
+
+class Quote(db.Model):
     __tablename__ = 'quote'
 
     id = db.Column(db.Integer,primary_key = True)
     quote_title = db.Column(db.String)
     quote_content = db.Column(db.String(1000))
-    category = db.Column(db.String)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    likes = db.Column(db.Integer)
-    dislikes = db.Column(db.Integer)
-
+   
     comments = db.relationship('Comment',backref =  'quote_id',lazy = "dynamic")
 
     def save_quote(self):
         db.session.add(self)
         db.session.commit()
 
-    @classmethod
-    def get_quote(cls,category):
-        quote = quote.query.filter_by(category=category).all()
-        return quote
 
     @classmethod
     def get_quote(cls,id):
-        quote = quote.query.filter_by(id=id).first()
+        quote = Quote.query.filter_by(id=id).first()
 
         return quote
 
@@ -96,5 +91,6 @@ class Comment(db.Model):
     def get_comments(cls,quote):
         comments = Comment.query.filter_by(quote_id=quote).all()
         return comments
-
+    # @classmethod
+    # def delete_comment()
 
